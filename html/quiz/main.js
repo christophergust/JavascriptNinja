@@ -4,22 +4,40 @@ alert('Welcome to Quiz Ninja!');
 const answer = prompt(question);
 alert(`You answered ${answer}`);*/
 
-  const quiz = [["What's Superman's real name?", "Clark Kent"],
+const quiz = [["What's Superman's real name?", "Clark Kent"],
                 ["What's Wonder Woman's real name?", "Diana Prince"],
                 ["What's Batman's real name?", "Bruce Wayne"]];
 
-let score = 0; // initialize score
+function start(quiz){
 
-for (const [question, answer] of quiz){
-  const response = prompt(question);
-  if(response === answer){
-    alert('Correct!');
-    score++;
+  let score = 0; // initialize score
+
+  for (const [question, answer] of quiz){
+    const response = ask(question);
+    check(response, answer);
   }
-  else{
-    alert(`Wrong!  The correct answer was ${answer}`);
+  // End main game loop
+
+  gameOver();
+
+  function ask(question){
+    return prompt(question);
+  }
+  
+  function check(response, answer){
+    if(response === answer){
+      alert ('Correct!');
+      score++;
+    }
+    else{
+      alert(`Wrong!  Correct answer is ${answer}`);
+    }
+  }
+  
+  function gameOver(){
+    alert(`Game Over!  You scored ${score} point${score !== 1 ? 's' : ''}`);
   }
 }
+start(quiz);
 
-// At the end of the game report the player's score)
-alert(`Game over!  You scored ${score} point${score !== 1 ? 's' : ''}`);
+
