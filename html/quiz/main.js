@@ -4,40 +4,55 @@ alert('Welcome to Quiz Ninja!');
 const answer = prompt(question);
 alert(`You answered ${answer}`);*/
 
-const quiz = [["What's Superman's real name?", "Clark Kent"],
-                ["What's Wonder Woman's real name?", "Diana Prince"],
-                ["What's Batman's real name?", "Bruce Wayne"]];
-
-function start(quiz){
-
-  let score = 0; // initialize score
-
-  for (const [question, answer] of quiz){
-    const response = ask(question);
-    check(response, answer);
+const quiz = [{
+    name: "Superman",
+    realName: "Clark Kent"
+  },
+  {
+    name: "Wonder Woman",
+    realName: "Diana Prince"
+  },
+  {
+    name: "Batman",
+    realName: "Bruce Wayne"
   }
-  // End main game loop
+];
 
-  gameOver();
+const game = {
+  start(quiz) {
+    this.questions = [...quiz];
+    this.score = 0; // initialize score
 
-  function ask(question){
-    return prompt(question);
-  }
-  
-  function check(response, answer){
-    if(response === answer){
-      alert ('Correct!');
-      score++;
+    // Main game loop
+    for (const question of this.questions) {
+      this.question = question;
+      this.ask();
+
     }
-    else{
+    // End main game loop
+
+    this.gameOver();
+  },
+  ask() {
+    const question = `What is ${this.question.name}'s real name?`;
+    const response = prompt(question);
+    this.check(response);
+  },
+
+
+check(response) {
+   const answer = this.question.realName;
+  if (response === answer) {
+      alert('Correct!');
+      this.score++;
+    } else {
       alert(`Wrong!  Correct answer is ${answer}`);
     }
-  }
-  
-  function gameOver(){
-    alert(`Game Over!  You scored ${score} point${score !== 1 ? 's' : ''}`);
+  },
+
+  gameOver() {
+    alert(`Game Over!  You scored ${this.score} point${this.score !== 1 ? 's' : ''}`);
   }
 }
-start(quiz);
 
-
+game.start(quiz);
